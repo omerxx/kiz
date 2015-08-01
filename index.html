@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="assets/css/michaelhue-keyscss-76bb603/keys.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
+    <script src="assets/js/dmauro-Keypress-06deea7/keypress-2.1.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<kbd class="light">&#x2318;</kbd>
+<div class="ggg kiz-f"></div>
+<div class="kiz-g"></div>
+
+<script>
+    var listener = new window.keypress.Listener();
+    listener.register_combo({
+        'keys'          : 'shift',
+        'on_keydown'    : function(){displayKiz()},
+        'on_release'    : function(){hideKiz()},
+        'is_solitary'   : true,
+        'is_exclusive'  : true,
+        'prevent_repeat': true
+    });
+
+    $('*[class*="kiz-"]').on('click',function(){console.log('Clicked ' + this.className)});
+
+    $(function(){
+        console.log('Create kizs');
+        var elements = $('*[class*="kiz-"]').get();
+        for (var i=0, len=elements.length; i < len; i++) {
+            var element = elements[i];
+            var className = element.className;
+            var regex = /(.*?\s*?(kiz-){1}(\w)\s*?.*?)/;
+            var result = regex.exec(className)[3];
+            var kiz = document.createElement('kbd');
+            kiz.className = 'light';
+            kiz.innerText = result;
+            kiz.style.display = 'none';
+            $(element).append(kiz);
+            setKiz(element,result);
+        }
+    });
+
+    function setKiz(element, stroke){
+        listener.register_combo({
+            'keys'          : 'shift ' + stroke,
+            'on_keydown'    : function(){element.click();}
+        });
+    }
+
+    function displayKiz(){
+        console.log('Display kizs');
+        $('kbd').fadeIn(500);
+    }
+
+    function hideKiz(){
+        console.log('Hide kizs');
+        $('kbd').fadeOut(3000);
+    }
+</script>
+
+<div align="center"><p class="kiz-t">OMER</p></div>
+</body>
+</html>
