@@ -33,13 +33,13 @@ function renderKiz(color){
         var element = elements[i];
         var className = element.className;
         var regex = /(.*?\s*?(kiz-){1}(\w)\s*?.*?)/;
-        var result = regex.exec(className)[3];
+        var stroke = regex.exec(className)[3];
         var kiz = document.createElement('div');
         kiz.className = 'kiz ' + color;
-        kiz.innerText = result;
+        kiz.innerText = stroke;
         $(kiz).hide();
-        $(element).append(kiz);
-        setKiz(element, result);
+        $(element).prepend(kiz);
+        setKiz(element, stroke);
     }
 }
 
@@ -54,11 +54,11 @@ function renderNavkiz(color){
     var up = document.createElement('div');
     up.className = 'kiz up ' + color;
     var down = document.createElement('div');
-    down.className = 'kiz up ' + color;
+    down.className = 'kiz down ' + color;
     var left = document.createElement('div');
-    left.className = 'kiz up ' + color;
+    left.className = 'kiz left ' + color;
     var right = document.createElement('div');
-    right.className = 'kiz up ' + color;
+    right.className = 'kiz right ' + color;
     navkiz.appendChild(fillerL);
     navkiz.appendChild(up);
     navkiz.appendChild(fillerR);
@@ -75,22 +75,23 @@ function setAlerts(){
 }
 
 function setKiz(element, stroke){
+    console.log('Set combo');
     listener.register_combo({
         'keys'          : 'alt ' + stroke,
-        'on_keydown'    : function(){clickKiz(); element.click(); element.focus()}
+        'on_keydown'    : function(){clickKiz(element); element.click();}
     });
 }
 
 function displayKiz(){
-    console.log('Display kizs');
+    console.log('Display kiz');
     $('.kiz').fadeIn(500);
 }
 
 function hideKiz(){
-    console.log('Hide kizs');
+    console.log('Hide kiz');
     $('.kiz').fadeOut(1000);
 }
 
-function clickKiz(){
+function clickKiz(element){
     $('.kiz').hide();
 }

@@ -17,6 +17,7 @@
     border-radius: 3px;
     border: none;
     cursor: pointer;
+    z-index: 1000;
 
 }
 
