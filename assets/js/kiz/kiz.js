@@ -54,7 +54,7 @@ function renderKiz(color){
         kiz.className = 'kiz ' + color;
         kiz.innerText = stroke;
         $(kiz).hide();
-        $(element).prepend(kiz);
+        $(element).after(kiz);
         setKiz(element, stroke);
     }
 }
