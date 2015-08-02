@@ -2,12 +2,18 @@
  * Created by lironrs and omerxx on 8/1/15.
  */
 
-//$('*[class*="kiz-"]').on('click',function(){console.log('Clicked ' + this.className)});
-
 $(function() {
+    setKey('alt');
+    renderKiz('black');
+    renderNavkiz('black');
+    setAlerts();
+});
+
+function setKey(key){
+    console.log('Set main key');
     listener = new window.keypress.Listener();
     listener.register_combo({
-        'keys': 'alt',
+        'keys': key,
         'on_keydown': function () {
             displayKiz()
         },
@@ -18,106 +24,73 @@ $(function() {
         'is_exclusive': true,
         'prevent_repeat': true
     });
+}
 
-    var navkiz = document.createElement('div');
-    navkiz.style.width = 'auto';
-    navkiz.style.height = 'auto';
-    navkiz.style.position = 'fixed';
-    navkiz.style.top = '100px';
-    navkiz.style.left = '40px';
-    navkiz.style.fontSize = '15px';
-
-    var filler = document.createElement('div');
-    filler.style.width = '30px';
-    filler.style.height = '20px';
-    filler.style.display = 'inline-block';
-
-    var rowTop = document.createElement('div');
-
-    var rowBottom = document.createElement('div');
-
-    var kizUp = document.createElement('kbd');
-    kizUp.className = 'light';
-    kizUp.innerText = '\u25B2';
-    kizUp.style.paddingLeft = '6px';
-    kizUp.style.paddingRight = '6px';
-    kizUp.style.margin = '3px';
-    kizUp.style.display = 'none';
-
-    var kizLeft = document.createElement('kbd');
-    kizLeft.className = 'light';
-    kizLeft.innerText = '\u25C0';
-    kizLeft.style.paddingLeft = '6px';
-    kizLeft.style.paddingRight = '6px';
-    kizLeft.style.margin = '3px';
-    kizLeft.style.display = 'none';
-
-    var kizDown = document.createElement('kbd');
-    kizDown.className = 'light';
-    kizDown.innerText = '\u25BC';
-    kizDown.style.paddingLeft = '6px';
-    kizDown.style.paddingRight = '6px';
-    kizDown.style.margin = '3px';
-    kizDown.style.display = 'none';
-
-    var kizRight = document.createElement('kbd');
-    kizRight.className = 'light';
-    kizRight.innerText = '\u25B6';
-    kizRight.style.paddingLeft = '6px';
-    kizRight.style.paddingRight = '6px';
-    kizRight.style.margin = '3px';
-    kizRight.style.display = 'none';
-
-    rowTop.appendChild(filler);
-    rowTop.appendChild(kizUp);
-    rowBottom.appendChild(kizLeft);
-    rowBottom.appendChild(kizDown);
-    rowBottom.appendChild(kizRight);
-    navkiz.appendChild(rowTop);
-    navkiz.appendChild(rowBottom);
-    $('body').append(navkiz);
-
-});
-
-$(function(){
-    console.log('Create kizs');
+function renderKiz(color){
+    console.log('Render kiz');
     var elements = $('*[class*="kiz-"]').get();
     for (var i=0, len=elements.length; i < len; i++) {
         var element = elements[i];
         var className = element.className;
         var regex = /(.*?\s*?(kiz-){1}(\w)\s*?.*?)/;
         var result = regex.exec(className)[3];
-        var kiz = document.createElement('kbd');
-        kiz.className = 'light';
+        var kiz = document.createElement('div');
+        kiz.className = 'kiz ' + color;
         kiz.innerText = result;
-        kiz.style.display = 'block';
         $(kiz).hide();
-        kiz.style.position = 'absolute';
-        kiz.style.bottom = '-30px';
-        kiz.style.paddingLeft = '6px';
-        kiz.style.paddingRight = '6px';
         $(element).append(kiz);
-        setKiz(element,result);
+        setKiz(element, result);
     }
-});
+}
+
+function renderNavkiz(color){
+    console.log('Render navkiz');
+    var navkiz = document.createElement('div');
+    navkiz.className = 'navkiz';
+    var fillerL = document.createElement('div');
+    fillerL.className = 'kiz filler';
+    var fillerR = document.createElement('div');
+    fillerR.className = 'kiz filler';
+    var up = document.createElement('div');
+    up.className = 'kiz up ' + color;
+    var down = document.createElement('div');
+    down.className = 'kiz up ' + color;
+    var left = document.createElement('div');
+    left.className = 'kiz up ' + color;
+    var right = document.createElement('div');
+    right.className = 'kiz up ' + color;
+    navkiz.appendChild(fillerL);
+    navkiz.appendChild(up);
+    navkiz.appendChild(fillerR);
+    navkiz.appendChild(left);
+    navkiz.appendChild(down);
+    navkiz.appendChild(right);
+    $('body').append(navkiz);
+    $(navkiz).children().hide();
+}
+
+function setAlerts(){
+    $('*[class*="kiz-"]').on('click',function(){console.log('Clicked ' + this.className)});
+    $('*[class*="kiz"]').on('focus',function(){console.log('Focused ' + this.className)});
+}
 
 function setKiz(element, stroke){
     listener.register_combo({
         'keys'          : 'alt ' + stroke,
-        'on_keydown'    : function(){element.click(); clickKiz(); }
+        'on_keydown'    : function(){clickKiz(); element.click(); element.focus()}
     });
 }
 
 function displayKiz(){
     console.log('Display kizs');
-    $('kbd').fadeIn(500);
+    $('.kiz').fadeIn(500);
 }
 
 function hideKiz(){
     console.log('Hide kizs');
-    $('kbd').fadeOut(1000);
+    $('.kiz').fadeOut(1000);
 }
 
 function clickKiz(){
-    $('kbd').hide();
+    $('.kiz').hide();
 }
