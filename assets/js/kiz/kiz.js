@@ -4,7 +4,7 @@
 
 $(function() {
     setKey('alt');
-    renderOnkiz('alt');
+    renderTogglekiz('alt');
     renderKiz('black');
     renderNavkiz('black');
     setAlerts();
@@ -27,11 +27,19 @@ function setKey(key){
     });
 }
 
-function renderOnkiz(key){
+function renderTogglekiz(key){
     console.log('Render onkiz');
     var onkiz = '<input class="onkiz-checkbox" id="onkiz" type="checkbox"/>' +
                 '<label class="onkiz" for="onkiz"><div class="black"></div>kiz support</label>';
     $('body').append(onkiz);
+    $('.onkiz-checkbox').click(function(){
+        if($(this).is(":checked")){
+            listener.stop_listening();
+        }
+        else if($(this).is(":not(:checked)")){
+            listener.listen();
+        }
+    });
 }
 
 function renderKiz(color){
