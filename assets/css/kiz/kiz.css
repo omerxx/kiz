@@ -110,14 +110,6 @@
     z-index: 1000;
 }
 
-.onkiz-checkbox:checked + .onkiz > .black:after{
-    content: 'off';
-}
-
-.onkiz-checkbox + .onkiz > .black:after{
-    content: 'on';
-}
-
 .onkiz-checkbox{
     display: none;
 }

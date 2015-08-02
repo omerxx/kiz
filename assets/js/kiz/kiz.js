@@ -30,13 +30,15 @@ function setKey(key){
 function renderTogglekiz(key){
     console.log('Render onkiz');
     var onkiz = '<input class="onkiz-checkbox" id="onkiz" type="checkbox"/>' +
-                '<label class="onkiz" for="onkiz"><div class="black"></div>kiz support</label>';
+                '<label class="onkiz" for="onkiz"><div class="black">on</div>kiz support</label>';
     $('body').append(onkiz);
     $('.onkiz-checkbox').click(function(){
         if($(this).is(":checked")){
+            $('.onkiz > .black').text('off');
             listener.stop_listening();
         }
         else if($(this).is(":not(:checked)")){
+            $('.onkiz > .black').text('on');
             listener.listen();
         }
     });
