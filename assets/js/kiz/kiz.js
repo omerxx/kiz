@@ -4,6 +4,7 @@
 
 $(function() {
     setKey('alt');
+    renderOnkiz('alt');
     renderKiz('black');
     renderNavkiz('black');
     setAlerts();
@@ -26,6 +27,13 @@ function setKey(key){
     });
 }
 
+function renderOnkiz(key){
+    console.log('Render onkiz');
+    var onkiz = '<input class="onkiz-checkbox" id="onkiz" type="checkbox"/>' +
+                '<label class="onkiz" for="onkiz"><div class="black"></div>kiz support</label>';
+    $('body').append(onkiz);
+}
+
 function renderKiz(color){
     console.log('Render kiz');
     var elements = $('*[class*="kiz-"]').get();
@@ -45,36 +53,21 @@ function renderKiz(color){
 
 function renderNavkiz(color){
     console.log('Render navkiz');
-    var navkiz = document.createElement('div');
-    navkiz.className = 'navkiz';
-    var fillerL = document.createElement('div');
-    fillerL.className = 'kiz filler';
-    var fillerR = document.createElement('div');
-    fillerR.className = 'kiz filler';
-    var up = document.createElement('div');
-    up.className = 'kiz up ' + color;
-    var down = document.createElement('div');
-    down.className = 'kiz down ' + color;
-    var left = document.createElement('div');
-    left.className = 'kiz left ' + color;
-    var right = document.createElement('div');
-    right.className = 'kiz right ' + color;
-    var space = document.createElement('div');
-    space.className = 'kiz space ' + color;
-    navkiz.appendChild(fillerL);
-    navkiz.appendChild(up);
-    navkiz.appendChild(fillerR);
-    navkiz.appendChild(left);
-    navkiz.appendChild(down);
-    navkiz.appendChild(right);
-    navkiz.appendChild(space);
+    var navkiz = '<div class="navkiz">' +
+                    '<div class="kiz filler"></div>' +
+                    '<div class="kiz up ' + color + '"></div>' +
+                    '<div class="kiz filler"></div>' +
+                    '<div class="kiz left ' + color + '"></div>' +
+                    '<div class="kiz down ' + color + '"></div>' +
+                    '<div class="kiz right ' + color + '"></div>' +
+                    '<div class="kiz space ' + color + '"></div>' +
+                '</div>';
     $('body').append(navkiz);
-    $(navkiz).children().hide();
+    $('.navkiz').children('.kiz').hide();
 }
 
 function setAlerts(){
     $('*[class*="kiz-"]').on('click',function(){console.log('Clicked ' + this.className)});
-    $('*[class*="kiz"]').on('focus',function(){console.log('Focused ' + this.className)});
 }
 
 function setKiz(element, stroke){
