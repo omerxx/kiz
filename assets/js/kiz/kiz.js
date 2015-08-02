@@ -59,12 +59,15 @@ function renderNavkiz(color){
     left.className = 'kiz left ' + color;
     var right = document.createElement('div');
     right.className = 'kiz right ' + color;
+    var space = document.createElement('div');
+    space.className = 'kiz space ' + color;
     navkiz.appendChild(fillerL);
     navkiz.appendChild(up);
     navkiz.appendChild(fillerR);
     navkiz.appendChild(left);
     navkiz.appendChild(down);
     navkiz.appendChild(right);
+    navkiz.appendChild(space);
     $('body').append(navkiz);
     $(navkiz).children().hide();
 }
