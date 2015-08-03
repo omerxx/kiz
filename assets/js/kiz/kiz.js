@@ -36,6 +36,7 @@ function renderTogglekiz(key){
         if($(this).is(":checked")){
             $('.onkiz > .black').text('off');
             listener.stop_listening();
+            hideKiz();
         }
         else if($(this).is(":not(:checked)")){
             $('.onkiz > .black').text('on');
